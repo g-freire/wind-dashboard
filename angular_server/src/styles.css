@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+
+    background-color:rgb(39,41,50); 
+    font-family: 'Montserrat', sans-serif;
+
+}
+body,h1,h2,h3,p,text{
+    color:white;
+    font-family: 'Montserrat', sans-serif;
+
+    
+}
+
+
+.label {
+    color: #fff !important;
+  }
+
+  .ngx-charts text { fill: #fff; 
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+  /* ::ng-deep .ngx-charts { text { fill: #fff !important; } } */
