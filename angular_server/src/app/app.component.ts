@@ -161,6 +161,14 @@ export class AppComponent {
           "name": "windPrediction2",
           "value": this.windPrediction2
         },
+        {
+          "name": "bearingOil",
+          "value": this.bearingOil
+        },
+        {
+          "name": "activePower",
+          "value": this.activePower
+        },
       ];
     });
   }

@@ -1,7 +1,7 @@
 ### Subsea Dashboard
 #### Flask, MongoDB, Angular7, SocketIO
 
-![Screenshot](dashboard-subsea.gif)
+![Screenshot](wind-park1.gif)
 #
 #### Steps to run
 #
@@ -11,4 +11,4 @@
 ###### python app.py
 ###### npm i
 ###### npm start
-![Screenshot](architecture.png)
+
