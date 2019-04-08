@@ -1,188 +1,62 @@
 <router-outlet></router-outlet>
-<div id="title" style="text-align:center">
-  <!-- <h1>Data from stream:  {{monitor}}</h1> -->
-  <h2>Subsea Station 3</h2>
-</div>  
+<!-- <div id="title" style="text-align:center"> -->
+  <!-- <h2>Wind Park Station 1</h2>
+</div>   -->
+<br><br><br>
+<div id="outterTitleContainer">
+    <div id="windImgTitle"> 
+      <h3>Wind Turbine 0013</h3>
+    </div>   
+     <div id="gaugeImgTitle"> 
+        <h3>Generated Power</h3>
+      </div> 
+         <div id="gaugeImgTitle2"> 
+          <h3>Rotor Speed</h3>
+        </div>
+</div>
 
+<div id="chart_gauge">
+ <div id="windImg"> 
+   <img src="https://www.rampionoffshore.com/app/themes/bedrock-theme/static/images/content/panel-1.svg"  style="width:230px;height:230px;">
+ </div>
+ <div id="gauge1">
+    <ngx-charts-gauge
+      [scheme]="gaugeColorSchemePie"
+      [view]="gaugeView"
+      [results]="chartDataSchemaRPMGauge"
+      [min]="gaugeMin"
+      [max]="gaugeMax"
+      [units]="gaugeUnits"
+      [startAngle]="gaugeStartAngle"
+      [angleSpan]="gaugeEndAngle"
+      [legendTitle]="gaugeLegendTitle"
+      (select)="onSelect($event)">
+    </ngx-charts-gauge>
+  </div>
+  <div id="gauge2">
+    <ngx-charts-gauge
+      [scheme]="gaugeColorSchemePie2"
+      [view]="gaugeView"
+      [results]="chartDataSchemaRPMGauge2"
+      [min]="gaugeMin"
+      [max]="gaugeMax"
+      [units]="gaugeUnits2"
+      [startAngle]="gaugeStartAngle"
+      [angleSpan]="gaugeEndAngle"
+      [legendTitle]="gaugeLegendTitle"
+      (select)="onSelect($event)">
+    </ngx-charts-gauge>
+  </div>
+</div>
+<br><br>
 <div id="chart1">
   <ngx-charts-pie-grid
     [view]="view"
     [scheme]="colorSchemePie"
-    [results]="single"
+    [results]="chartDataSchemaPie"
     [animations]="animations"
     [minWidth] ='minWidth'
     [designatedTotal]='designatedTotal'
     (select)="onSelect($event)">
   </ngx-charts-pie-grid>
 </div>
-
-<!-- <div id="title" style="text-align:center"> -->
-  <!-- <img src="https://www.bhge.com/sites/subsea-connect/assets/images/01_.png"  style="width:200px;height:300px; padding-left: 10px"> -->
-  <!-- <img src="https://www.bhge.com/sites/subsea-connect/assets/images/09_.png"  style="width:200px;height:300px;"> -->
-  <!-- <img src="https://www.bhge.com/sites/subsea-connect/assets/images/06_.png"  style="width:200px;height:300px;"> -->
-  <!-- <img src="https://www.bhge.com/sites/subsea-connect/assets/images/07_.png"  style="width:200px;height:300px;"> -->
-<!-- </div>   -->
-<br>
-<div id="chart2">
-    <img src="https://www.bhge.com/sites/subsea-connect/assets/images/01_.png"  style="width:230px;height:230px; padding-right: 80px">
-
-  <ngx-charts-bar-horizontal
-    [view]="viewHotizontal"
-    [scheme]="colorScheme"
-    [results]="single"
-    [gradient]="gradient"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [legend]="showLegend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [showGridLines]="showGridLines"
-    [yAxisTicks]="yAxisTicks"
-    [xScaleMax]='xScaleMax'
-    [xScaleMin]='xScaleMin'
-    (select)="onSelect($event)">
-  </ngx-charts-bar-horizontal>
-</div>
-
-<div id="chart1">
-    <ngx-charts-pie-grid
-      [view]="view"
-      [scheme]="colorSchemePie"
-      [results]="single"
-      [animations]="animations"
-      [minWidth] ='minWidth'
-      [designatedTotal]='designatedTotal'
-      (select)="onSelect($event)">
-    </ngx-charts-pie-grid>
-  </div>
-
-<div id="chart2">
-    <img src="https://www.bhge.com/sites/subsea-connect/assets/images/06_.png"  style="width:230px;height:230px; padding-right: 80px">
-
-  <ngx-charts-bar-horizontal
-    [view]="viewHotizontal"
-    [scheme]="colorScheme"
-    [results]="single"
-    [gradient]="gradient"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [legend]="showLegend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [showGridLines]="showGridLines"
-    [yAxisTicks]="yAxisTicks"
-    [xScaleMax]='xScaleMax'
-    [xScaleMin]='xScaleMin'
-    (select)="onSelect($event)">
-  </ngx-charts-bar-horizontal>
-</div>
-
-<div id="chart1">
-    <ngx-charts-pie-grid
-      [view]="view"
-      [scheme]="colorSchemePie"
-      [results]="single"
-      [animations]="animations"
-      [minWidth] ='minWidth'
-      [designatedTotal]='designatedTotal'
-      (select)="onSelect($event)">
-    </ngx-charts-pie-grid>
-  </div>
-<div id="chart2">
-    <img src="https://www.bhge.com/sites/subsea-connect/assets/images/08_.png"  style="width:230px;height:230px; padding-right: 80px">
-
-  <ngx-charts-bar-horizontal
-    [view]="viewHotizontal"
-    [scheme]="colorScheme"
-    [results]="single"
-    [gradient]="gradient"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [legend]="showLegend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [showGridLines]="showGridLines"
-    [yAxisTicks]="yAxisTicks"
-    [xScaleMax]='xScaleMax'
-    [xScaleMin]='xScaleMin'
-    (select)="onSelect($event)">
-  </ngx-charts-bar-horizontal>
-</div>
-
-<div id="chart1">
-    <ngx-charts-pie-grid
-      [view]="view"
-      [scheme]="colorSchemePie"
-      [results]="single"
-      [animations]="animations"
-      [minWidth] ='minWidth'
-      [designatedTotal]='designatedTotal'
-      (select)="onSelect($event)">
-    </ngx-charts-pie-grid>
-  </div>
-<div id="chart2">
-    <img src="https://www.bhge.com/sites/subsea-connect/assets/images/07_.png"  style="width:230px;height:230px; padding-right: 80px">
-
-  <ngx-charts-bar-horizontal
-    [view]="viewHotizontal"
-    [scheme]="colorScheme"
-    [results]="single"
-    [gradient]="gradient"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [legend]="showLegend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [showGridLines]="showGridLines"
-    [yAxisTicks]="yAxisTicks"
-    [xScaleMax]='xScaleMax'
-    [xScaleMin]='xScaleMin'
-    (select)="onSelect($event)">
-  </ngx-charts-bar-horizontal>
-</div>
-
-<div id="chart1">
-    <ngx-charts-pie-grid
-      [view]="view"
-      [scheme]="colorSchemePie"
-      [results]="single"
-      [animations]="animations"
-      [minWidth] ='minWidth'
-      [designatedTotal]='designatedTotal'
-      (select)="onSelect($event)">
-    </ngx-charts-pie-grid>
-  </div>
-<div id="chart2">
-    <img src="https://www.bhge.com/sites/subsea-connect/assets/images/09_.png"  style="width:230px;height:230px; padding-right: 80px">
-
-  <ngx-charts-bar-horizontal
-    [view]="viewHotizontal"
-    [scheme]="colorScheme"
-    [results]="single"
-    [gradient]="gradient"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [legend]="showLegend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [showGridLines]="showGridLines"
-    [yAxisTicks]="yAxisTicks"
-    [xScaleMax]='xScaleMax'
-    [xScaleMin]='xScaleMin'
-    (select)="onSelect($event)">
-  </ngx-charts-bar-horizontal>
-</div>
-
-
-
-

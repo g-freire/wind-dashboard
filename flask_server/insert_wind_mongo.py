@@ -17,9 +17,9 @@ def generate_random_wind_contract():
             random_value_wind_prediction_probability1 = round(uniform(0.1, 1.0), 2)
             random_value_wind_prediction_probability2 = round(uniform(0.2, 1.0), 2)
             random_value_wind_prediction_probability3 = round(uniform(0.3, 1.0), 2)
-            random_value_bearing_temperature = round(random()*100, 2)
+            random_value_bearing_temperature = round(uniform(0.25, 0.6)*1000, 1)
             random_value_bearing_vibration = round(uniform(0.01, 3.0), 2)
-            random_value_bearing_oil = round(random()*100, 3)
+            random_value_bearing_oil = round(uniform(0.85, 1.0)*100, 1)
 
             wind_contract = {
                 "name": "wind_power", 
