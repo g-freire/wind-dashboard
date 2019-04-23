@@ -1,5 +1,5 @@
-### Subsea Dashboard
-#### Flask, MongoDB, Angular7, SocketIO
+### Wind Power Dashboard
+#### Flask, MongoDB, Angular7, SocketIO -  testing the interesting https://github.com/swimlane/ngx-charts repository
 
 ![Screenshot](wind-park1.gif)
 #
