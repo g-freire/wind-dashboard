@@ -33,7 +33,7 @@ class QueryMongoThread(Thread):
     def getLastSample(self):
         print("Querying last record from db")
         while not thread_stop_event.isSet():
-            cursor.execute("SELECT TOP(1) * FROM [pubs].[dbo].[sensor] ORDER BY employee_id DESC") 
+            cursor.execute("SELECT TOP(1) * FROM [pubs].[dbo].[tbl_sensores] ORDER BY tempo DESC") 
             row = cursor.fetchone()
             print(row)
 
