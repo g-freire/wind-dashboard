@@ -1,6 +1,8 @@
 import pyodbc 
 from random import random, uniform
 from time import sleep
+import datetime
+
 
 server = '127.0.0.1,1433' 
 database = 'pubs' 
@@ -22,11 +24,11 @@ cursor = cnxn.cursor()
 def generate_random_wind_contract():
     try:
         while 1:
-            timestamp = round(random()*1000, 2)
+            timestamp = str(datetime.datetime.now())
             sensor_value = round(uniform(0.25, 0.6)*1000, 1)
-            cursor.execute("INSERT INTO [pubs].[dbo].[sensor] VALUES({},{})".format(timestamp, sensor_value))
+            print("INSERT INTO [pubs].[dbo].[tbl_sensores] VALUES('{}',{})".format(timestamp, sensor_value))
+            cursor.execute("INSERT INTO [pubs].[dbo].[tbl_sensores] VALUES('{}',{})".format(timestamp, sensor_value))
             cnxn.commit()
-            print("INSERT INTO [pubs].[dbo].[sensor] VALUES({},{})".format(timestamp, sensor_value))
             sleep(2)
             
     except Exception as e:print(e)

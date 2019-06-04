@@ -1,4 +1,5 @@
 # Start with a basic flask app webpage.
+import pyodbc 
 from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, url_for, copy_current_request_context
 from random import random
@@ -17,9 +18,12 @@ socketio = SocketIO(app)
 thread = Thread()
 thread_stop_event = Event()
 
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client["streaming"]
-collection = db["wind_0001"]
+server = '127.0.0.1,1433' 
+database = 'pubs' 
+username = 'SA' 
+password = '1q2w3e%&!' 
+cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+cursor = cnxn.cursor()
 
 class QueryMongoThread(Thread):
     def __init__(self):
@@ -29,27 +33,25 @@ class QueryMongoThread(Thread):
     def getLastSample(self):
         print("Querying last record from db")
         while not thread_stop_event.isSet():
-            cursor = collection.find().limit(1).sort("_id", -1)
-            for doc in cursor:
-                mongo_contract = doc
-            print(mongo_contract['name'])
-            print(mongo_contract['rotorSpeed'])
+            cursor.execute("SELECT TOP(1) * FROM [pubs].[dbo].[sensor] ORDER BY employee_id DESC") 
+            row = cursor.fetchone()
+            print(row)
 
-            socketio.emit( 'wind', {
-                'name': mongo_contract['name'], 
-                'rotorSpeed': mongo_contract['rotorSpeed'], 
-                'activePower': mongo_contract['activePower'], 
-                'reactivePower': mongo_contract['reactivePower'], 
-                'pf': mongo_contract['pf'], 
-                'totalEnergy': mongo_contract['totalEnergy'], 
-                'windPrediction1': mongo_contract['windPrediction1'], 
-                'windPrediction2': mongo_contract['windPrediction2'], 
-                'windPrediction3': mongo_contract['windPrediction3'], 
-                'bearingTemperature': mongo_contract['bearingTemperature'], 
-                'bearingVibration': mongo_contract['bearingVibration'], 
-                'bearingOil': mongo_contract['bearingOil']
-                }, 
-                namespace='/wind')
+            # socketio.emit( 'wind', {
+            #     'name': mongo_contract['name'], 
+            #     'rotorSpeed': mongo_contract['rotorSpeed'], 
+            #     'activePower': mongo_contract['activePower'], 
+            #     'reactivePower': mongo_contract['reactivePower'], 
+            #     'pf': mongo_contract['pf'], 
+            #     'totalEnergy': mongo_contract['totalEnergy'], 
+            #     'windPrediction1': mongo_contract['windPrediction1'], 
+            #     'windPrediction2': mongo_contract['windPrediction2'], 
+            #     'windPrediction3': mongo_contract['windPrediction3'], 
+            #     'bearingTemperature': mongo_contract['bearingTemperature'], 
+            #     'bearingVibration': mongo_contract['bearingVibration'], 
+            #     'bearingOil': mongo_contract['bearingOil']
+            #     }, 
+            #     namespace='/wind')
 
             sleep(self.delay)
 
@@ -73,7 +75,16 @@ def test_disconnect():
 
 @app.route('/')
 def index():
+    global thread
+    print('Client connected')
+
+    if not thread.isAlive():
+        print("Starting QueryMongo main Thread")
+        thread = QueryMongoThread()
+        thread.start()
+    
     return 'Wind Power API'
 
 if __name__ == '__main__':
     socketio.run(app)
+
