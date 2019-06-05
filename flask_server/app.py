@@ -19,7 +19,7 @@ thread = Thread()
 thread_stop_event = Event()
 
 server = '127.0.0.1,1433' 
-database = 'pubs' 
+database = 'client_sensors' 
 username = 'SA' 
 password = '1q2w3e%&!' 
 cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
@@ -33,26 +33,9 @@ class QueryMongoThread(Thread):
     def getLastSample(self):
         print("Querying last record from db")
         while not thread_stop_event.isSet():
-            cursor.execute("SELECT TOP(1) * FROM [pubs].[dbo].[tbl_sensores] ORDER BY tempo DESC") 
+            cursor.execute("SELECT TOP(1) * FROM [client_sensors].[dbo].[sensors] ORDER BY timestamps DESC") 
             row = cursor.fetchone()
             print(row)
-
-            # socketio.emit( 'wind', {
-            #     'name': mongo_contract['name'], 
-            #     'rotorSpeed': mongo_contract['rotorSpeed'], 
-            #     'activePower': mongo_contract['activePower'], 
-            #     'reactivePower': mongo_contract['reactivePower'], 
-            #     'pf': mongo_contract['pf'], 
-            #     'totalEnergy': mongo_contract['totalEnergy'], 
-            #     'windPrediction1': mongo_contract['windPrediction1'], 
-            #     'windPrediction2': mongo_contract['windPrediction2'], 
-            #     'windPrediction3': mongo_contract['windPrediction3'], 
-            #     'bearingTemperature': mongo_contract['bearingTemperature'], 
-            #     'bearingVibration': mongo_contract['bearingVibration'], 
-            #     'bearingOil': mongo_contract['bearingOil']
-            #     }, 
-            #     namespace='/wind')
-
             sleep(self.delay)
 
     def run(self):
