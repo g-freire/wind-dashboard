@@ -1,0 +1,17 @@
+body{
+  /* // dark theme   */
+  background-color:rgb(39,41,50);  
+  /* background-color:#eeeeee;   */
+  font-family: 'Montserrat', sans-serif;
+}
+
+body,h1,h2,h3,p,text{
+    color: whitesmoke;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.ngx-charts text { 
+    fill: whitesmoke; 
+    font-family: 'Montserrat', sans-serif;
+}
+/* ::ng-deep .ngx-charts { text { fill: #fff !important; } } */

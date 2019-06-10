@@ -1,0 +1,62 @@
+<router-outlet></router-outlet>
+<!-- <div id="title" style="text-align:center"> -->
+  <!-- <h2>Wind Park Station 1</h2>
+</div>   -->
+<br><br><br>
+<div id="outterTitleContainer">
+    <div id="windImgTitle"> 
+      <h3>Wind Turbine 0013</h3>
+    </div>   
+     <div id="gaugeImgTitle"> 
+        <h3>Generated Power</h3>
+      </div> 
+         <div id="gaugeImgTitle2"> 
+          <h3>Rotor Speed</h3>
+        </div>
+</div>
+
+<div id="chart_gauge">
+ <div id="windImg"> 
+   <img src="https://www.rampionoffshore.com/app/themes/bedrock-theme/static/images/content/panel-1.svg"  style="width:230px;height:230px;">
+ </div>
+ <div id="gauge1">
+    <ngx-charts-gauge
+      [scheme]="gaugeColorSchemePie"
+      [view]="gaugeView"
+      [results]="chartDataSchemaRPMGauge"
+      [min]="gaugeMin"
+      [max]="gaugeMax"
+      [units]="gaugeUnits"
+      [startAngle]="gaugeStartAngle"
+      [angleSpan]="gaugeEndAngle"
+      [legendTitle]="gaugeLegendTitle"
+      (select)="onSelect($event)">
+    </ngx-charts-gauge>
+  </div>
+  <div id="gauge2">
+    <ngx-charts-gauge
+      [scheme]="gaugeColorSchemePie2"
+      [view]="gaugeView"
+      [results]="chartDataSchemaRPMGauge2"
+      [min]="gaugeMin"
+      [max]="gaugeMax"
+      [units]="gaugeUnits2"
+      [startAngle]="gaugeStartAngle"
+      [angleSpan]="gaugeEndAngle"
+      [legendTitle]="gaugeLegendTitle"
+      (select)="onSelect($event)">
+    </ngx-charts-gauge>
+  </div>
+</div>
+<br><br>
+<div id="chart1">
+  <ngx-charts-pie-grid
+    [view]="view"
+    [scheme]="colorSchemePie"
+    [results]="chartDataSchemaPie"
+    [animations]="animations"
+    [minWidth] ='minWidth'
+    [designatedTotal]='designatedTotal'
+    (select)="onSelect($event)">
+  </ngx-charts-pie-grid>
+</div>
