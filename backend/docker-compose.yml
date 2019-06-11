@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    image: microsoft/mssql-server-linux
+    container_name: SQL_Server
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=1q2w3e%&!
+    volumes:
+      - data:/app/data
+    networks:
+        - back_bone
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "1"
+
+volumes:
+  - data
+
+networks:
+  - back_bone

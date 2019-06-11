@@ -1,13 +1,17 @@
 # Start with a basic flask app webpage.
 import pyodbc 
 from flask_socketio import SocketIO, emit
-from flask import Flask, render_template, url_for, copy_current_request_context
+from flask import Flask, render_template, url_for, copy_current_request_context, jsonify,make_response, request
 from random import random
-from time import sleep
+from time import sleep, time
+import json
 from threading import Thread, Event
 import pymongo  
 from flask_cors import CORS
 # from querymongothread import QueryMongoThread
+# from ai_processor import AIProcessor
+from sklearn.externals import joblib
+from random import random, uniform
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -15,6 +19,7 @@ app.config['SECRET_KEY'] = '!#@!6ce2fa3e-0ba4-!#@!ca3-a069-fe66941723e4!#@!'
 app.config['DEBUG'] = True
 socketio = SocketIO(app)
 
+# aiProcessor = AIProcessor()
 thread = Thread()
 thread_stop_event = Event()
 
@@ -35,12 +40,34 @@ class QueryMongoThread(Thread):
         while not thread_stop_event.isSet():
             cursor.execute("SELECT TOP(1) * FROM [client_sensors].[dbo].[sensors] ORDER BY timestamps DESC") 
             row = cursor.fetchone()
-            print(row)
+
+            a = row[1] * round(random()*.221230, 2)
+            b = row[1] * round(uniform(0.1, 1.0), 2)
+            c = row[1] * round(random()*100, 2)
+            print('a:',a,'b:',b,'c:',c)
+
+            model_from_joblib = joblib.load('xgb-3features-fmc.joblib')
+            model_prediction = model_from_joblib.predict([a, b, c])
+            print("Predicted value:", model_prediction)
             sleep(self.delay)
 
     def run(self):
         self.getLastSample()
 
+# @app.route('/predict', methods=['GET', 'POST'])
+# def predict():
+#     try:
+#         start = time.time()
+#         post_body = json.loads(request.data.decode('utf-8'))
+#
+#         sensor1 = float(post_body['sensor1'])
+#         sensor2 = float(post_body['sensor2'])
+#         sensor3 = float(post_body['sensor3'])
+#
+#         data = aiProcessor.predict_pump_output(sensor1, sensor2, sensor3)
+#
+#         return str(data[0])
+#     except Exception as e:print(e)
 
 @socketio.on('connect', namespace='/wind')
 def test_connect():
@@ -66,7 +93,17 @@ def index():
         thread = QueryMongoThread()
         thread.start()
     
-    return 'Wind Power API'
+    return 'SQL SERVER API'
+
+@app.errorhandler(400)
+def bad_request(error):
+    return make_response(jsonify({'error': 'Bad request'}), 400)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 if __name__ == '__main__':
     socketio.run(app)
