@@ -44,11 +44,13 @@ class QueryMongoThread(Thread):
             a = row[1] * round(random()*.221230, 2)
             b = row[1] * round(uniform(0.1, 1.0), 2)
             c = row[1] * round(random()*100, 2)
+            print('-----------------------------------------------------------')
+            print("Queried from db")
             print('a:',a,'b:',b,'c:',c)
-
             model_from_joblib = joblib.load('xgb-3features-fmc.joblib')
             model_prediction = model_from_joblib.predict([a, b, c])
             print("Predicted value:", model_prediction)
+            print('-----------------------------------------------------------')
             sleep(self.delay)
 
     def run(self):
