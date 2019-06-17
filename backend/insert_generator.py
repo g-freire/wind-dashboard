@@ -10,15 +10,8 @@ password = '1q2w3e%&!'
 cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
 cursor = cnxn.cursor()
 
-#Sample insert query
-# cursor.execute("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('SQL Server Express New 20', 'SQLEXPRESS New 20', 0, 0, CURRENT_TIMESTAMP )") 
-# row = cursor.fetchone()
 
-# while row: 
-#     print 'Inserted Product key is ' + str(row[0]) 
-#     row = cursor.fetchone()
-
-def generate_random_wind_contract():
+def insert_generator():
     try:
         while 1:
             timestamp = str(datetime.datetime.now())
@@ -26,11 +19,11 @@ def generate_random_wind_contract():
             print("INSERT INTO [client_sensors].[dbo].[sensors] VALUES('{}',{})".format(timestamp, sensor_value))
             cursor.execute("INSERT INTO [client_sensors].[dbo].[sensors] VALUES('{}',{})".format(timestamp, sensor_value))
             cnxn.commit()
-            sleep(2)
+            # sleep(2)
             
     except Exception as e:print(e)
     finally:
         cnxn.close()
 
 if __name__ == '__main__':
-    generate_random_wind_contract()
+    insert_generator()

@@ -15,7 +15,6 @@ from random import random, uniform
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-app.config['SECRET_KEY'] = '!#@!6ce2fa3e-0ba4-!#@!ca3-a069-fe66941723e4!#@!'
 app.config['DEBUG'] = True
 socketio = SocketIO(app)
 
@@ -51,6 +50,9 @@ class QueryMongoThread(Thread):
             model_prediction = model_from_joblib.predict([a, b, c])
             print("Predicted value:", model_prediction)
             print('-----------------------------------------------------------')
+            socketio.emit('newnumber', a, namespace='wind')
+            print(socketio.emit('newnumber', a, namespace='wind'))
+
             sleep(self.delay)
 
     def run(self):

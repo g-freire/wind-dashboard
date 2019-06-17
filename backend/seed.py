@@ -3,7 +3,7 @@ import pyodbc
 
 # docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=1q2w3e%&!' -p 1433:1433 -d microsoft/mssql-server-linux
 
-OPEN CONNECTION TO DB
+# OPEN CONNECTION TO DB
 server = '127.0.0.1,1433' 
 database = 'master' 
 username = 'SA' 
@@ -59,7 +59,7 @@ cursor.execute(string)
 con.commit()
 print('');
 
-QUERY TABLE
+# QUERY TABLE
 string = "SELECT * FROM [client_sensors].[dbo].[sensors] ORDER BY timestamps DESC"
 print(string);
 cursor.execute(string) 
@@ -71,7 +71,7 @@ for i in range(len(row)):
       print(row[i])
 print('');
 
-CLOSING THE CONNECTION
+# CLOSING THE CONNECTION
 print('-----------------------------------------------------------')
 print('ENDING SEED SCRIPT')
 print('-----------------------------------------------------------')
