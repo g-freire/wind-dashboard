@@ -1,6 +1,7 @@
 import pyodbc 
 
-server = '127.0.0.1,1433' 
+# server = '127.0.0.1,1433' 
+server = 'https://wsgi-server.herokuapp.com/' 
 database = 'master' 
 username = 'SA' 
 password = '1q2w3e%&!' 
