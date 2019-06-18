@@ -17,7 +17,6 @@ def get_total_rows():
     return total_rows[0]
 
 
-
 def extract_load():
     start = time()
     query = "SELECT * FROM [client_sensors].[dbo].[sensors] ORDER BY timestamps DESC"
@@ -34,14 +33,17 @@ def extract_load():
         # Let's write to the file
         else:
             df.to_csv(csv_file, header=False)
-    total_time = time() - start
-    print('Process took', total_time, ' seconds')
     # Clean up
     csv_file.close()
     cursor.close()
     connection.close()
+    total_time = time() - start
+    print('Process took', total_time, ' seconds')
+    print("---------------------------------------------- ")
 
-a = get_total_rows()
-print('Total records on db is',a)
-
-extract_load()
+if __name__ == '__main__':
+    print("---------------------------------------------- ")
+    print("Start random data generator ")
+    print('Total records on db is',get_total_rows())
+    print("---------------------------------------------- ")
+    extract_load()

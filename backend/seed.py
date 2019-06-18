@@ -45,12 +45,12 @@ string = """
                   timestamps nvarchar(max) not null,
                   valores int not null
             )
-            INSERT INTO sensors (timestamps,valores) VALUES('2019-06-05 14:35:48.917309', 35412353)
-            INSERT INTO sensors (timestamps,valores) VALUES('2019-08-05 14:55:48.917309', 89901233)
-            INSERT INTO sensors (timestamps,valores) VALUES('2019-06-05 14:12:48.917309', 35412353)
-            INSERT INTO sensors (timestamps,valores) VALUES('2019-06-05 14:55:48.917309', 34134122)
-            INSERT INTO sensors (timestamps,valores) VALUES('2019-06-05 15:35:48.917309', 35412353)
-            INSERT INTO sensors (timestamps,valores) VALUES('2019-07-05 14:55:48.917309', 09876523)
+            INSERT INTO sensors (timestamps,valores) VALUES('2019-01-05 14:35:48.917309', 35412353)
+            INSERT INTO sensors (timestamps,valores) VALUES('2019-01-05 14:55:48.917309', 89901233)
+            INSERT INTO sensors (timestamps,valores) VALUES('2019-01-05 14:12:48.917309', 35412353)
+            INSERT INTO sensors (timestamps,valores) VALUES('2019-01-05 14:55:48.917309', 34134122)
+            INSERT INTO sensors (timestamps,valores) VALUES('2019-01-05 15:35:48.917309', 35412353)
+            INSERT INTO sensors (timestamps,valores) VALUES('2019-01-05 14:55:48.917309', 09876523)
          """
 print('-----------------------------------------------------------')
 print(string)
