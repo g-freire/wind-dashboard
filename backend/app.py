@@ -54,7 +54,9 @@ class QueryMongoThread(Thread):
             model_prediction = model_from_joblib.predict([a, b, c])
             print("Predicted value:", model_prediction)
             print('-----------------------------------------------------------')
-            socketio.emit('newnumber', a, namespace='wind')
+            # a flag que sera injetada no frontend é a primeira string
+            socketio.emit('wind', a, namespace='/wind')
+            print("emited value",a)
             # print(socketio.emit('newnumber', a, namespace='wind'))
 
             sleep(self.delay)
@@ -87,24 +89,14 @@ def test_connect():
         thread = QueryMongoThread()
         thread.start()
 
+
 @socketio.on('disconnect', namespace='/wind')
 def test_disconnect():
     print('Client disconnected')
 
+
 @app.route('/')
 def index():
-    global thread
-    print('Client connected')
-
-    if not thread.isAlive():
-        print("Starting QueryMongo main Thread")
-        thread = QueryMongoThread()
-        thread.start()
-    
-    return 'SQL SERVER API'
-
-@app.route('/api')
-def api():
     return 'SQL SERVER API'
 
 
