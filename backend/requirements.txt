@@ -1,5 +1,6 @@
 Flask==1.0.2
 Flask-SocketIO==3.1.2
 flask-cors
-pyodbc
-gunicorn
+xgboost
+joblib
+gevent

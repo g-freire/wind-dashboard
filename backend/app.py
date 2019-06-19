@@ -1,33 +1,33 @@
-# Start with a basic flask app webpage.
-import pyodbc 
-from flask_socketio import SocketIO, emit
-from flask import Flask, render_template, url_for, copy_current_request_context, jsonify,make_response, request
-from random import random
+#!/usr/bin/env python3
+from random import random, uniform
 from time import sleep, time
 import json
 from threading import Thread, Event
-import pymongo  
+
+# import pyodbc 
+from flask import Flask, render_template, url_for, copy_current_request_context, jsonify,make_response, request
 from flask_cors import CORS
-# from querymongothread import QueryMongoThread
-# from ai_processor import AIProcessor
-from sklearn.externals import joblib
-from random import random, uniform
+from flask_socketio import SocketIO, emit
+# from sklearn.externals import joblib
+import joblib
+
+# import eventlet
+# eventlet.monkey_patch()
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.config['DEBUG'] = True
 socketio = SocketIO(app)
 
-# aiProcessor = AIProcessor()
 thread = Thread()
 thread_stop_event = Event()
 
-server = '127.0.0.1,1433' 
-database = 'client_sensors' 
-username = 'SA' 
-password = '1q2w3e%&!' 
-cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-cursor = cnxn.cursor()
+# server = '127.0.0.1,1433' 
+# database = 'client_sensors' 
+# username = 'SA' 
+# password = '1q2w3e%&!' 
+# cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+# cursor = cnxn.cursor()
 
 class QueryMongoThread(Thread):
     def __init__(self):
@@ -37,12 +37,16 @@ class QueryMongoThread(Thread):
     def getLastSample(self):
         print("Querying last record from db")
         while not thread_stop_event.isSet():
-            cursor.execute("SELECT TOP(1) * FROM [client_sensors].[dbo].[sensors] ORDER BY timestamps DESC") 
-            row = cursor.fetchone()
+            # cursor.execute("SELECT TOP(1) * FROM [client_sensors].[dbo].[sensors] ORDER BY timestamps DESC") 
+            # row = cursor.fetchone()
+            # a = row[1] * round(random()*.221230, 2)dock
+            # b = row[1] * round(uniform(0.1, 1.0), 2)
+            # c = row[1] * round(random()*100, 2)
 
-            a = row[1] * round(random()*.221230, 2)
-            b = row[1] * round(uniform(0.1, 1.0), 2)
-            c = row[1] * round(random()*100, 2)
+            a = 100 * round(random()*.221230, 2)
+            b = 100 * round(uniform(0.1, 1.0), 2)
+            c = 100 * round(random()*100, 2)
+            
             print('-----------------------------------------------------------')
             print("Queried from db")
             print('a:',a,'b:',b,'c:',c)
@@ -51,7 +55,7 @@ class QueryMongoThread(Thread):
             print("Predicted value:", model_prediction)
             print('-----------------------------------------------------------')
             socketio.emit('newnumber', a, namespace='wind')
-            print(socketio.emit('newnumber', a, namespace='wind'))
+            # print(socketio.emit('newnumber', a, namespace='wind'))
 
             sleep(self.delay)
 
@@ -99,6 +103,11 @@ def index():
     
     return 'SQL SERVER API'
 
+@app.route('/api')
+def api():
+    return 'SQL SERVER API'
+
+
 @app.errorhandler(400)
 def bad_request(error):
     return make_response(jsonify({'error': 'Bad request'}), 400)
@@ -110,5 +119,9 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-    socketio.run(app)
+    # socketio.run(app)
+    socketio.run(app, host='0.0.0.0')
 
+
+# requirements
+# eventlet==0.24.1
