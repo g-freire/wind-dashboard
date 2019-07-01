@@ -24,6 +24,7 @@ def extract_load_chunk(query_size=10000):
     # Get data in batches
     try:
         while 1:
+            # maybe refactor connection string to vertical query
             sql_server_read_query = " SELECT TOP ({}) [timestamps],[valores] FROM [client_sensors].[dbo].[sensors] WHERE timestamps > '{}'".format(query_size,last_timestamp)
             cursor.execute(sql_server_read_query)
             df = pd.DataFrame(cursor.fetchmany(query_size))
