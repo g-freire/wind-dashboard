@@ -1,4 +1,4 @@
-cd angular_server
+cd frontend_server
 start npm start
 
 SLEEP 10
