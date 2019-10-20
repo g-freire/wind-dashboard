@@ -19,27 +19,26 @@ def get_total_rows():
 
 def extract_load_chunk(query_size=10000):
     start = time()
-
     last_timestamp = '2019-06-05 14:35:48.917309'
 
     # Get data in batches
     try:
-        try:
-            while 1:
-                sql_server_read_query = " SELECT TOP ({}) [timestamps],[valores] FROM [client_sensors].[dbo].[sensors] WHERE timestamps > '{}'".format(query_size,last_timestamp)
-                cursor.execute(sql_server_read_query)
-                df = pd.DataFrame(cursor.fetchmany(query_size))
-                if len(df) == 0:
-                    break
-                else:
-                    df.to_csv(csv_file, header=False)
-                    last_row_timestamp = df.tail(1)[0].tolist()[0][0]
-                    last_timestamp = last_row_timestamp
-        except Exception as e:print(e)
+        while 1:
+            # maybe refactor connection string to vertical query
+            sql_server_read_query = " SELECT TOP ({}) [timestamps],[valores] FROM [client_sensors].[dbo].[sensors] WHERE timestamps > '{}'".format(query_size,last_timestamp)
+            cursor.execute(sql_server_read_query)
+            df = pd.DataFrame(cursor.fetchmany(query_size))
+            if len(df) == 0:
+                break
+            # if len(df) < 1000:
+            #     break
+            else:
+                df.to_csv(csv_file, header=False)
+                last_row_timestamp = df.tail(1)[0].tolist()[0][0]
+                last_timestamp = last_row_timestamp
     except Exception as e:print(e)
 
     finally:
-        # Clean up
         csv_file.close()
         cursor.close()
         connection.close()
@@ -52,7 +51,8 @@ if __name__ == '__main__':
     print("SQLServer Chunk Extractor to CSV")
     print('Total records on db is',get_total_rows())
     print("---------------------------------------------- ")
-    extract_load_chunk(200000)
+    # extract_load_chunk(10000)
+    extract_load_chunk(100000)
 
 
 # maybe do a 10% on the record count as chunk decision
